@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>outerHTML</h1>
+
+<form oninput="x.value=(parseInt(a.value)*parseInt(b.value))+(parseInt(c.value)*parseInt(d.value))">
+  <br>
+  
+  <input type="checkbox" id="a" onclick="addDaMatti()" value="0">
+  DaMatti 6,50 Euro. <br> Tocca per quantita´ <input type="range" id="b" min="0" max="10" value="0">
+  <p>Quantitá: <span id="quantitadm"></span></p>
+  <br>
+  <br>
+  <input type="checkbox" id="c" onclick="addSalmone()" value="0">
+  Salmone 7,0 Euro.<br> Tocca per quantita´ <input type="range" id="d" min="0" max="10" value="0">
+  <p>Quantitá: <span id="quantitasl"></span></p>
+  <br>
+  <br>
+  <p>Totale Euro =<output id="myOutput" name="x" for="a b c d"></output>
+ 
+</form>
+
+<button type="button" onclick="mailOrder()">Invia Ordine</button>
+
+<br>
+<br>
+
+<div id="result"></div>
+<div id="resultsm"></div>
+
+<script>
+
+
+var h = document.getElementsByTagName("h1")[0];
+var y = document.getElementsByTagName("p")[0];
+var z = "href=https://wa.me/send?phone=447851039826&text=";
+
+
+var baseStringStart = "<a " + z + "Vorrei%20";
+var baseStringTail = "%20DaMatti>Clicca per inviare</a>";
+var qttDM = sessionStorage.getItem("qttdm")
+var qttSM = sessionStorage.getItem("qttsm")
+var wholeString = baseStringStart + qttDM + baseStringTail;
+
+function mailOrder() {
+  
+ 
+  h.outerHTML = wholeString
+  var salstor = sessionStorage.getItem("qttdm");
+  
+  
+  // not working start
+  if (parseInt(d.value) >  0) {
+  wholestring = baseStringStart + qttDM + qttSM + baseStringTail
+  // not working finish
+  }
+  
+}
+
+function addDaMatti() {
+  // Set price
+  document.getElementById("a").value = "6.5";
+  // add one to quantity
+  
+  //show quantity
+  var slider = document.getElementById("b");
+  var output = document.getElementById("quantitadm");
+ 
+  
+  //slider
+  output.innerHTML = slider.value;
+  
+
+  slider.oninput = function() {
+  output.innerHTML = this.value;
+  // Store
+  sessionStorage.setItem("qttdm", this.value);
+  
+  var qttDm =  sessionStorage.getItem("qttdm") + " DaMatti";
+
+  
+  // Retrieve
+  
+  document.getElementById("result").innerHTML = qttDm
+   }
+   
+  
+}
+
+function addSalmone() {
+  // Get the checkbox
+  document.getElementById("c").value = "7.3";
+  //show quantity
+  var slider = document.getElementById("d");
+  var output = document.getElementById("quantitasl");
+  output.innerHTML = slider.value;
+
+  slider.oninput = function() {
+  output.innerHTML = this.value;
+    // Store
+  sessionStorage.setItem("qttsm", this.value);
+  
+  var qttSm =  sessionStorage.getItem("qttsm") + " IlSalmone";
+  
+  // Retrieve
+  document.getElementById("resultsm").innerHTML = qttSm
+   }
+ 
+}
+
+</script>
+
+</body>
+</html>
